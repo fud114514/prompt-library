@@ -33,3 +33,6 @@ temp/
 # Excel临时文件
 ~$*.xlsx
 ~$*.xls
+
+# 协作记录文件
+ticket.md
