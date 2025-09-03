@@ -1,0 +1,68 @@
+name: 同步提示词库
+
+on:
+  # 定时触发
+  schedule:
+    - cron: '0 0 * * *'  # 每天 UTC 0:00
+  
+  # 手动触发
+  workflow_dispatch:
+    inputs:
+      force_sync:
+        description: '强制同步所有数据'
+        required: false
+        default: 'false'
+  
+  # Push 触发
+  push:
+    branches:
+      - main
+    paths:
+      - 'scripts/**'
+      - '.github/workflows/sync.yml'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 检出代码
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    
+    - name: 🐍 设置 Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+        cache: 'pip'
+    
+    - name: 📦 安装依赖
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r scripts/requirements.txt
+    
+    - name: 🔐 设置凭据
+      env:
+        GOOGLE_SHEETS_CREDENTIALS: ${{ secrets.GOOGLE_SHEETS_CREDENTIALS }}
+      run: |
+        echo "$GOOGLE_SHEETS_CREDENTIALS" > credentials.json
+    
+    - name: 🔄 同步数据
+      env:
+        FORCE_SYNC: ${{ github.event.inputs.force_sync }}
+      run: |
+        python scripts/sync_sheets.py
+    
+    - name: 💾 提交更改
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add .
+        git diff --staged --quiet || git commit -m "🔄 自动同步: $(date +'%Y-%m-%d %H:%M:%S')"
+    
+    - name: 📤 推送更改
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: ${{ github.ref }}
