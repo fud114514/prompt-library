@@ -1,150 +1,181 @@
-# 📚 提示词库（Excel转换版）
+# 📚 Prompt Library - 高质量提示词库
+
+![License](https://img.shields.io/badge/license-MIT-blue)
+![提示词数量](https://img.shields.io/badge/prompts-350%2B-green)
+![分类数量](https://img.shields.io/badge/categories-58-orange)
+![Python](https://img.shields.io/badge/python-3.8%2B-blue)
+
+一个全面的高质量AI提示词库，支持Excel和Markdown格式之间的双向转换。
+
+## 🌟 项目特点
+
+- 📊 **双向转换**: 支持Excel ↔️ Markdown格式互转
+- 🗂️ **结构化管理**: 58个分类，350+个精心设计的提示词
+- 🔄 **版本控制**: 支持提示词版本迭代和管理
+- 🤖 **多平台兼容**: 适用于Claude、GPT、Gemini等主流AI模型
+- 🛠️ **自动化工具**: 提供批量转换和管理脚本
+
+## 📂 项目结构
+
+```
+prompt-library/
+├── prompt_excel/           # Excel源文件目录
+│   └── prompt (3).xlsx    # 主要提示词Excel文件
+├── prompt_docs/           # 转换后的Markdown文档
+│   └── prompt_docs_*/     # 按时间戳命名的文档快照
+├── scripts/               # 转换和管理脚本
+│   ├── excel_to_docs.py  # Excel转Markdown核心脚本
+│   ├── docs_to_excel.py  # Markdown转Excel核心脚本
+│   ├── convert_local.py  # 本地转换工具
+│   ├── start_convert.py  # 批量转换启动器
+│   └── config.yaml       # 配置文件
+├── docs/                  # 项目文档
+└── tests/                # 测试脚本
+```
 
-![同步状态](https://img.shields.io/badge/status-synced-green)
-![提示词数量](https://img.shields.io/badge/prompts-197-blue)
-![版本总数](https://img.shields.io/badge/versions-294-orange)
-![数据来源](https://img.shields.io/badge/source-Excel-yellow)
+## 🚀 快速开始
 
-最后更新: 2025-09-03 06:03:47
+### 安装依赖
 
+```bash
+# 创建虚拟环境
+python3 -m venv .venv
+source .venv/bin/activate  # Linux/Mac
+# 或
+.venv\Scripts\activate  # Windows
 
-## 📊 总览
+# 安装依赖
+pip install -r scripts/requirements.txt
+```
 
-- **数据来源**: prompt (3).xlsx
+### 基础使用
 
-- **分类数量**: 58  
-- **提示词总数**: 197
-- **版本总数**: 294
+#### Excel → Markdown 转换
 
+```bash
+# 转换单个Excel文件
+python scripts/start_convert.py --mode excel2docs --select prompt_excel/prompt\ \(3\).xlsx
+
+# 扫描并转换所有Excel文件
+python scripts/start_convert.py --mode excel2docs --excel-dir prompt_excel
+```
+
+#### Markdown → Excel 转换
+
+```bash
+# 转换指定的文档目录
+python scripts/start_convert.py --mode docs2excel --select prompt_docs/prompt_docs_2025_0903_055708
+
+# 自动扫描并转换
+python scripts/start_convert.py --mode docs2excel
+```
+
+## 📚 提示词分类
+
+项目包含58个精心组织的分类，涵盖：
+
+### 核心分类
+- 🔧 **元提示词** - 15个高级提示词工程模板
+- 📖 **说明文档** - 必看的重要使用说明
+- 🏗️ **软件工程** - 专业的编程和架构提示词
+- 📊 **分析工具** - 数据分析和可视化提示词
+
+### 专业领域
+- 🧠 **哲学工具箱** - 深度思考和哲学分析
+- 📈 **行业咨询** - 商业和行业分析模板
+- 🎯 **需求解析** - 需求分析和规划工具
+- 📐 **序列图生成** - 技术文档和流程图生成
+
+### 创意内容
+- ✍️ **写作辅助** - 各类文章和创意写作
+- 🎨 **排版工具** - 文档格式化和美化
+- 📱 **社交媒体** - Twitter、Reddit等平台内容
+- 🎬 **视频处理** - 字幕生成和视频脚本
+
+### 特色工具
+- 🔄 **翻译工具** - 多语言翻译和本地化
+- 📝 **学术写作** - 论文和学术内容生成
+- 🎮 **游戏设计** - 游戏剧情和世界观构建
+- 💼 **商业文档** - 商业计划和报告模板
+
+## 🔧 高级功能
 
-## 📂 分类导航
+### 批量处理
 
-- [说明（必看，非常重要！！！）](./prompts/(1)_说明（必看，非常重要！！！）/) - 4 个提示词, 7 个版本
+```bash
+# 使用main.py进行批量处理
+python main.py --select "prompt_excel/prompt (3).xlsx"
+```
 
-- [元提示词](./prompts/(2)_元提示词/) - 15 个提示词, 22 个版本
+### 配置文件
 
-- [层级结构分析](./prompts/(3)_层级结构分析/) - 2 个提示词, 6 个版本
+编辑 `scripts/config.yaml` 来自定义：
+- 输出目录路径
+- 文件命名规则
+- 转换选项
+- 工具链接和资源
 
-- [黄金圈解释](./prompts/(4)_黄金圈解释/) - 1 个提示词, 3 个版本
+### 版本管理
 
-- [序列图生成](./prompts/(5)_序列图生成/) - 1 个提示词, 1 个版本
+系统自动为每次转换创建时间戳目录：
+- 格式：`prompt_docs_YYYY_MMDD_HHMMSS`
+- 保留完整的转换历史
+- 支持版本对比和回滚
 
-- [哲学工具箱](./prompts/(6)_哲学工具箱/) - 6 个提示词, 8 个版本
+## 📊 统计信息
 
-- [CLAUDE.md](./prompts/(7)_CLAUDE.md/) - 1 个提示词, 2 个版本
+- **提示词总数**: 350+
+- **分类数量**: 58
+- **版本总数**: 500+
+- **支持格式**: Excel (.xlsx), Markdown (.md), JSON
+- **最后更新**: 2025-09-03
 
-- [软件工程](./prompts/(8)_软件工程/) - 1 个提示词, 1 个版本
+## 🤝 贡献指南
 
-- [Reddit提示词](./prompts/(9)_Reddit提示词/) - 1 个提示词, 1 个版本
+欢迎贡献新的提示词或改进现有内容：
 
-- [排版](./prompts/(10)_排版/) - 4 个提示词, 4 个版本
+1. Fork 本仓库
+2. 创建特性分支 (`git checkout -b feature/NewPrompt`)
+3. 提交更改 (`git commit -m 'Add new prompt category'`)
+4. 推送到分支 (`git push origin feature/NewPrompt`)
+5. 创建 Pull Request
 
-- [notebookllm用提示词](./prompts/(11)_notebookllm用提示词/) - 3 个提示词, 6 个版本
+### 提示词格式规范
 
-- [项目序列图生成](./prompts/(12)_项目序列图生成/) - 1 个提示词, 2 个版本
+- 使用清晰的分类名称
+- 包含版本信息（如 v1.0, v1.1）
+- 提供使用说明和示例
+- 标注适用的AI模型
 
-- [行业咨询](./prompts/(13)_行业咨询/) - 1 个提示词, 1 个版本
+## 🛠️ 技术栈
 
-- [需求解析](./prompts/(14)_需求解析/) - 1 个提示词, 1 个版本
-
-- [分析](./prompts/(15)_分析/) - 2 个提示词, 4 个版本
-
-- [gemini字幕处理](./prompts/(16)_gemini字幕处理/) - 1 个提示词, 1 个版本
-
-- [政治批判工具箱](./prompts/(17)_政治批判工具箱/) - 2 个提示词, 5 个版本
-
-- [推文生成器](./prompts/(18)_推文生成器/) - 1 个提示词, 1 个版本
-
-- [麦肯锡行业分析](./prompts/(19)_麦肯锡行业分析/) - 1 个提示词, 1 个版本
-
-- [学习提示词](./prompts/(20)_学习提示词/) - 27 个提示词, 48 个版本
-
-- [提示词元素](./prompts/(21)_提示词元素/) - 8 个提示词, 8 个版本
-
-- [grok抓取提示词](./prompts/(22)_grok抓取提示词/) - 1 个提示词, 1 个版本
-
-- [人话写作](./prompts/(23)_人话写作/) - 1 个提示词, 1 个版本
-
-- [x prompt收集](./prompts/(24)_x_prompt收集/) - 2 个提示词, 3 个版本
-
-- [函数化万物](./prompts/(25)_函数化万物/) - 1 个提示词, 6 个版本
-
-- [编程提示词](./prompts/(26)_编程提示词/) - 4 个提示词, 8 个版本
-
-- [项目分析](./prompts/(27)_项目分析/) - 1 个提示词, 1 个版本
-
-- [解释提示词](./prompts/(28)_解释提示词/) - 1 个提示词, 3 个版本
-
-- [全量输出](./prompts/(29)_全量输出/) - 1 个提示词, 1 个版本
-
-- [产品策略](./prompts/(30)_产品策略/) - 1 个提示词, 1 个版本
-
-- [小红书](./prompts/(31)_小红书/) - 1 个提示词, 1 个版本
-
-- [视频生成提示词](./prompts/(32)_视频生成提示词/) - 2 个提示词, 2 个版本
-
-- [谋士](./prompts/(33)_谋士/) - 1 个提示词, 3 个版本
-
-- [前端复刻流程](./prompts/(34)_前端复刻流程/) - 3 个提示词, 3 个版本
-
-- [网页UI逆向分析提示词](./prompts/(35)_网页UI逆向分析提示词/) - 1 个提示词, 1 个版本
-
-- [典籍句子学习](./prompts/(36)_典籍句子学习/) - 2 个提示词, 3 个版本
-
-- [经验](./prompts/(37)_经验/) - 9 个提示词, 16 个版本
-
-- [电子书与文档处理](./prompts/(38)_电子书与文档处理/) - 3 个提示词, 13 个版本
-
-- [anki卡片格式输出](./prompts/(39)_anki卡片格式输出/) - 1 个提示词, 2 个版本
-
-- [简讯提示词](./prompts/(40)_简讯提示词/) - 1 个提示词, 1 个版本
-
-- [思维导图](./prompts/(41)_思维导图/) - 1 个提示词, 3 个版本
-
-- [未来视角](./prompts/(42)_未来视角/) - 6 个提示词, 6 个版本
-
-- [AI使用思维](./prompts/(43)_AI使用思维/) - 2 个提示词, 4 个版本
-
-- [思维协议](./prompts/(44)_思维协议/) - 1 个提示词, 1 个版本
-
-- [使用ai的思维](./prompts/(45)_使用ai的思维/) - 1 个提示词, 1 个版本
-
-- [李继刚文选](./prompts/(46)_李继刚文选/) - 2 个提示词, 2 个版本
-
-- [图片逆向](./prompts/(47)_图片逆向/) - 2 个提示词, 2 个版本
-
-- [艺术风格描述](./prompts/(48)_艺术风格描述/) - 2 个提示词, 2 个版本
-
-- [豆包听书](./prompts/(49)_豆包听书/) - 1 个提示词, 1 个版本
-
-- [艺术](./prompts/(50)_艺术/) - 1 个提示词, 1 个版本
-
-- [文案逆向](./prompts/(51)_文案逆向/) - 10 个提示词, 12 个版本
-
-- [流程图](./prompts/(52)_流程图/) - 2 个提示词, 3 个版本
-
-- [学习音频](./prompts/(53)_学习音频/) - 1 个提示词, 1 个版本
-
-- [思维模型](./prompts/(54)_思维模型/) - 1 个提示词, 2 个版本
-
-- [道](./prompts/(55)_道/) - 6 个提示词, 11 个版本
-
-- [法](./prompts/(56)_法/) - 4 个提示词, 6 个版本
-
-- [术](./prompts/(57)_术/) - 24 个提示词, 24 个版本
-
-- [器](./prompts/(58)_器/) - 9 个提示词, 9 个版本
-
-
-## 🔄 同步信息
-
-- **数据源**: prompt (3).xlsx
-- **处理时间**: 2025-09-03 06:03:47
-
+- **Python 3.8+** - 核心开发语言
+- **pandas** - Excel数据处理
+- **openpyxl** - Excel文件读写
+- **PyYAML** - 配置文件管理
+- **InquirerPy** - 交互式命令行界面
+- **python-dotenv** - 环境变量管理
 
 ## 📝 许可证
-本项目采用 MIT 许可证
 
+本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情
+
+## 🔗 相关链接
+
+- [GitHub仓库](https://github.com/fud114514/prompt-library)
+- [问题反馈](https://github.com/fud114514/prompt-library/issues)
+- [贡献指南](https://github.com/fud114514/prompt-library/blob/main/CONTRIBUTING.md)
+
+## 👥 作者
+
+- **fud114514** - [GitHub Profile](https://github.com/fud114514)
+
+## 🙏 致谢
+
+感谢所有贡献者和使用者的支持！
 
 ---
-*完全基于 Excel 表格自动生成*
+
+⭐ 如果这个项目对你有帮助，请给它一个星标！
+
+📧 有问题或建议？请[创建Issue](https://github.com/fud114514/prompt-library/issues/new)
